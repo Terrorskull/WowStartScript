@@ -41,7 +41,7 @@ ECHO Configuring Classic WoW located at %DIR%...
 :: Clear WDB folder
 ECHO.
 ECHO Clearing WDB folder...
-del /F /Q "%DIR%\Cache\WDB"
+rd "%DIR%\Cache\WDB\" /s /q
 
 :: Check for single quote in realm name
 SET OREALM=%REALM%
