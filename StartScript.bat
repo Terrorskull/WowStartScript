@@ -19,14 +19,14 @@
 :: User defined settings
 ::-----------------------------------------------------------
 
-:: Wow.exe file path - the location storing the classic WoW.exe
+:: Wow.exe file path - the location storing the Burning Crusade WoW.exe
 SET DIR=C:\Program Files (x86)\Burning Crusade
 
 :: Account name - generated on site for the server
 SET NAME=myname
 
 :: Realm name - the realm to log into, e.g., Felmyst (Horde), Felmyst (Alliance), Darrowshire, Medivh, Outland
-SET REALM=Felmyst (Horde)
+SET REALM="Felmyst (Horde)"
 
 :: Logon server specified in realmlist.wtf file - provided by site hosting the server
 SET LOGON=game.felmyst.com
@@ -36,7 +36,7 @@ SET LOGON=game.felmyst.com
 ::-----------------------------------------------------------
 cls
 ECHO.
-ECHO Configuring Classic WoW located at %DIR%...
+ECHO Configuring The Burning Crusade located at %DIR%...
 
 :: Clear WDB folder
 ECHO.
@@ -64,7 +64,7 @@ ECHO    SET realmName "%REALM%"
 ECHO    SET realmList "%OREALM%"
 powershell -Command "(Get-Content '%DIR%\WTF\Config.wtf') -replace '^SET accountName.+', 'SET accountName \"%NAME%\"' -replace '^SET realmName.+', 'SET realmName \"%REALM%\"' -replace '^SET realmList.+', 'SET realmList \"%LOGON%\"' | Set-Content '%DIR%\WTF\Config.wtf'"
 
-:: Run Classic WoW
+:: Run Burning Crusade WoW
 ECHO.
-ECHO Starting Classic WoW on %OREALM%...
+ECHO Starting The Burning Crusade on %OREALM%...
 start "" "%DIR%\WoW.exe"
