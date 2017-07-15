@@ -2,8 +2,8 @@
 :: Name:     StartScript.bat
 :: Purpose:  Configure and start Classic WoW on specified server
 :: Author:   terrorskull@terrorskull.com
-:: Version:  1.3
-:: Date:     05JUL2017
+:: Version:  1.4
+:: Date:     15JUL2017
 ::
 ::           Create a copy of this file for each realm.
 ::
@@ -11,6 +11,10 @@
 ::
 ::           Run the executable directly or create a shortcut on the
 ::           desktop (allows for changing the icon).
+:: Modified: 15JUL2017 - 1.4
+::           - Fixed issue happening with realms containing parenthesis
+::           - Modified how the cache files are cleared
+::           - Fixed display bug reporting the wrong logon server being set in the config.wtf file
 :: Modified: 05JUL2017 - 1.3
 ::           - Removed merged realms of Kronos II and Zeth'Kur from suggested list
 :: Modified: 20JAN2017 - 1.2
@@ -49,15 +53,11 @@ ECHO Configuring Classic WoW located at %DIR%...
 :: Clear WDB folder
 ECHO.
 ECHO Clearing WDB folder...
-del /F /Q "%DIR%\WDB"
+rd "%DIR%\WDB\" /s /q
 
 :: Check for single quote in realm name
 SET OREALM=%REALM%
-if not x%REALM:'=%==x%REALM% (
-	ECHO.
-	SET REALM=%REALM:'=''%
-	ECHO Fixed single quoted realm name %OREALM% ^=^> %REALM%
-)
+SET REALM=%REALM:'=''%
 
 :: Set correct realm list
 ECHO.
@@ -68,8 +68,8 @@ powershell -Command "(Get-Content '%DIR%\realmlist.wtf') -replace '^set realmlis
 ECHO.
 ECHO Updating config.wtf file values:
 ECHO    SET accountName "%NAME%"
-ECHO    SET realmName "%REALM%"
-ECHO    SET realmList "%OREALM%"
+ECHO    SET realmName "%OREALM%"
+ECHO    SET realmList "%LOGON%"
 powershell -Command "(Get-Content '%DIR%\WTF\Config.wtf') -replace '^SET accountName.+', 'SET accountName \"%NAME%\"' -replace '^SET realmName.+', 'SET realmName \"%REALM%\"' -replace '^SET realmList.+', 'SET realmList \"%LOGON%\"' | Set-Content '%DIR%\WTF\Config.wtf'"
 
 :: Run Classic WoW
